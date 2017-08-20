@@ -10,12 +10,14 @@ var app = express();
 require('dotenv').load();
 require('./app/config/passport')(passport);
 
-mongoose.connect(process.env.MONGO_URI);
+mongoose.connect(process.env.MONGO_URI, { useMongoClient: true });
 mongoose.Promise = global.Promise;
 
 app.use('/controllers', express.static(process.cwd() + '/app/controllers'));
 app.use('/public', express.static(process.cwd() + '/public'));
 app.use('/common', express.static(process.cwd() + '/app/common'));
+app.use('/jquery', express.static(process.cwd() + '/node_modules/jquery/dist'));
+app.use('/bootstrap', express.static(process.cwd() + '/node_modules/bootstrap/dist'));
 
 app.use(session({
 	secret: 'secretClementine',
